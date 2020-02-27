@@ -828,8 +828,6 @@
   }
 
   .svg-container {
-    width: 300px;
-    height: 300px;
     margin: auto;
     margin-bottom: 30px;
   }
@@ -1241,7 +1239,7 @@
       <div class="left-sidebar-header">
         <img src="assets/logo-.png">
       </div>
-      <div class="compass-title">FLSRadarV2</div>
+
       <div class="left-sidebar-buttons">
         <div id="radar-toggle-btn" class="left-sidebar-btn">
         <div class="left-sidebar-btn-label">Radar</div>
@@ -1389,7 +1387,7 @@
         var chartTitle = chartSVG
           .append("text")
           .attr("class", "chart-title")
-          .text("FLSmidth Disruption Mapping Radar")
+          .text("FLSmidth Compass")
           .attr("y", (-height * 4.55) / 10);
   
         var leftProjection = d3
@@ -1578,6 +1576,8 @@
                             .select(selection)
                             .node()
                             .getBoundingClientRect().height + 40
+
+                        d3.select(".svg-container").style("width", tmp_width + "px").style("height", tmp_height + "px")
         
                         var tmp_svg = d3
                           .select(".svg-container")
@@ -1586,52 +1586,52 @@
                           .attr("height", tmp_height);
 
                           if (i === 0) {
-                            var hor = tmp_width - 180
-                            var ver = tmp_height + 25;
+                            var hor = tmp_width - 170
+                            var ver = tmp_height + 45;
                           }
                           if (i === 1) {
                             var hor = tmp_width - 300;
-                            var ver = tmp_height - 0;
+                            var ver = tmp_height + 20;
                           }
                           if (i === 2) {
                             var hor = tmp_width - 340;
-                            var ver = tmp_height + 0;
+                            var ver = tmp_height - 10;
                           }
                           if (i === 3) {
-                            var hor = tmp_width - 330;
-                            var ver = tmp_height - 150;
+                            var hor = tmp_width - 335;
+                            var ver = tmp_height - 170;
                           }
                           if (i === 4) {
-                            var hor = tmp_width - 300;
-                            var ver = tmp_height - 270;
+                            var hor = tmp_width - 290;
+                            var ver = tmp_height - 290;
                           }
                           if (i === 5) {
-                            var hor = tmp_width - 140;
-                            var ver = tmp_height - 310;
+                            var hor = tmp_width - 170;
+                            var ver = tmp_height - 330;
                           }
                           if (i === 6) {
-                            var hor = tmp_width - 30;
+                            var hor = tmp_width - 15;
                             var ver = tmp_height - 340;
                           }
                           if (i === 7) {
-                            var hor = tmp_width - 0;
-                            var ver = tmp_height - 260;
+                            var hor = tmp_width + 20;
+                            var ver = tmp_height - 290;
                           }
                           if (i === 8) {
-                            var hor = tmp_width - 0;
-                            var ver = tmp_height - 150;
+                            var hor = tmp_width + 40;
+                            var ver = tmp_height - 170;
                           }
                           if (i === 9) {
-                            var hor = tmp_width + 25;
-                            var ver = tmp_height - 25;
+                            var hor = tmp_width + 45;
+                            var ver = tmp_height - 15;
                           }
                           if (i === 10) {
-                            var hor = tmp_width - 25;
+                            var hor = tmp_width + 15;
                             var ver = tmp_height + 25;
                           }
                           if (i === 11) {
                             var hor = tmp_width - 25;
-                            var ver = tmp_height + 25;
+                            var ver = tmp_height + 45;
                           }
 
                           var tmp_chartSVG = tmp_svg
@@ -1726,6 +1726,94 @@
                                 .attr("fill", "#f4f4f4");
                             });
                           }
+
+                                                       var tmpSegmentsLabelBand = tmp_chartSVG
+                    .selectAll("path.segment-band")
+                    .data([chartPieData[i]])
+                    .enter()
+                    .append("path")
+                    .classed("segment-band", true)
+                    .attr("d", segmentLabelBandArc)
+                    .attr("fill", "#82ADBD")
+  
+                  var tmpLabels = tmp_chartSVG
+                    .append("g")
+                    .classed("labels", true);
+
+                  var tmpLabelsOther = tmp_chartSVG
+                    .append("g")
+                    .classed("labels", true);
+  
+                  tmpLabels
+                    .append("def")
+                    .append("path")
+                    .attr("id", "label-path")
+                    .attr(
+                      "d",
+                      "m0 " +
+                        -labelRadius +
+                        " a" +
+                        labelRadius +
+                        " " +
+                        labelRadius +
+                        " 0 1,1 -0.01 0"
+                    );
+  
+                  tmpLabelsOther
+                    .append("def")
+                    .append("path")
+                    .attr("id", "label-other-path")
+                    .attr(
+                      "d",
+                      "m0 " +
+                        -labelOtherRadius +
+                        " a" +
+                        labelOtherRadius +
+                        " " +
+                        labelOtherRadius +
+                        " 0 1,1 -0.01 0"
+                    );
+  
+                  tmpLabels
+                    .selectAll("text")
+                    .data([chartPieData[i]])
+                    .enter()
+                    .append("text")
+                    .attr("class", "label-text")
+                    .append("textPath")
+                    .attr("xlink:href", "#label-path")
+                    .attr("startOffset", function(d, i) {
+                      var percentage =
+                        ((d.endAngle - d.startAngle) / 2 + d.startAngle) /
+                        0.0628319;
+                      return percentage + "%";
+                    })
+                    .text(function(d) {
+                      return label_wrap(d.data.value.key.toUpperCase())[0];
+                    });
+  
+                  tmpLabelsOther
+                    .selectAll("text")
+                    .data([chartPieData[i]])
+                    .enter()
+                    .append("text")
+                    .attr("class", "label-text")
+                    .append("textPath")
+                    .attr("xlink:href", "#label-other-path")
+                    .attr("startOffset", function(d, i) {
+                      var percentage =
+                        ((d.endAngle - d.startAngle) / 2 + d.startAngle) /
+                        0.0628319;
+                      return percentage + "%";
+                    })
+                    .text(function(d) {
+                      var result = label_wrap(d.data.value.key.toUpperCase());
+                      if (result.length > 2) {
+                        return result[1] + " " + result[2];
+                      } else {
+                        return result[1];
+                      }
+                    });
 
                           var tmp_nodes = tmp_chartSVG
                           .selectAll("nodes")
@@ -1852,11 +1940,14 @@
                   d3.select("#total-no-startups").html(numStartups)
                   d3.select("#total-avg-funding").html("$" + formatFunding(funding_amount) + ", $" + formatFunding(avgFunding))
                   d3.select("#avg-funding-year").html(avgYear + ", " + maturityMode[0] )
+                  d3.select("#most-active-competitor").html(popup_data[0]["Most Active Competitor"])
+                  d3.select("#most-pop-tech").html(popup_data[0]["Popular Technology + Business Model"])
+                  d3.select("#pattern-recognized").html(popup_data[0]["Pattern Recognised"])
                   
-                  console.log("opp_space", opp_space)
+
                   heroPopupData = []
                   hero_data.forEach(function(v) {
-                    console.log('v', v)
+  
                       if (v["Opportunity Space"].toLowerCase() === opp_space) {
                         heroPopupData.push(v)
                       }
@@ -2099,6 +2190,9 @@
                   d["Themes"] = v["Themes"];
                   d["Theme Definition"] = v["Theme Definition"];
                   d["Opportunity Space Description"] = v["Description"]
+                  d["Most Active Competitor"] = v["Most Active Competitor"]
+                  d["Popular Technology + Business Model"] = v["Popular Technology + Business Model"]
+                  d["Pattern Recognised"] = v["Pattern Recognised"]
                 }
               });
             });
@@ -4909,9 +5003,7 @@
                     .append("path")
                     .classed("segment-band", true)
                     .attr("d", segmentLabelBandArc)
-                    .attr("fill", function(d) {
-                      return focusAreaeBandColorScale(d.data.value.key);
-                    });
+                    .attr("fill", "#82ADBD")
   
                   var tmpLabels = tmp_chartSVG
                     .append("g")
