@@ -1152,7 +1152,7 @@
               </div>
             </div>
             <div class="column right">
-              <div class="right-title">Hero Startups:</div>
+              <div class="right-title">Hero Startups</div>
               <div id="hs-0" class="hero-startup">
                 <div class="hero-startup-container">
                     <div class="fl">
@@ -1553,6 +1553,7 @@
                 d3.select(".popup-section-a").style("display", "")
                 d3.select(".popup-section-b").style("display", "none")
                 d3.select(".analysis-btn").style("display", "")
+                d3.select(".popup-analysis-label").html("Insight")
                 
                 var opp_space = d.data.value.key
                 var funding_amount = d.data.value.value
@@ -2015,6 +2016,7 @@
                       d3.select(".popup-section-a").style("display", "none")
                       d3.select(".popup-section-b").style("display", "")
                       d3.select(".analysis-btn").style("display", "")
+                      d3.select(".popup-analysis-label").html("Analysis")
                       bar_data = popup_data
                       bar_data.forEach(function(v) {
                           v.Funding = v["Total funding (US$)"]
@@ -2027,6 +2029,7 @@
                         d3.select(".popup-section-a").style("display", "")
                         d3.select(".popup-section-b").style("display", "none")
                         d3.select(".analysis-btn").style("display", "")
+                        d3.select(".popup-analysis-label").html("Insight")
                     
   
                       }
@@ -2541,7 +2544,7 @@
               });
 
             // Bar Chart:
-            barChartList = ["Amount of Funding", "Founded Year"]
+            barChartList = ["Amount of Funding", "Founded Year", "Maturity"]
 
             var barchartSelector = d3
             .select("#bar-chart-selector")
@@ -4051,7 +4054,8 @@
                     .attr("class", "bar-axis-label")
                     .text("Number of Startups");   
 
-                } else {
+                } 
+                if (type === "Founded Year") {
 
                     var yearHist = []
                     var years = []
@@ -4251,6 +4255,103 @@
                         .call(d3.axisLeft(barY)); */
 
                 }
+
+                if (type === "Maturity") {
+                  var maturityOrder = [
+                  "Existing", "Emerging", "Distant"]
+                  function maturitySort(a, b) {
+                    
+                    for (i = 0; i < maturityOrder.length; i++) {
+                      if (a === maturityOrder[i]) {
+                        var valA = i;
+                      }
+                      if (b === maturityOrder[i]) {
+                        var valB = i;
+                      }
+                    }
+                    return valA < valB ? -1 : valA > valB ? 1 : valA >= valB ? 0 : NaN;
+                  }
+
+                  var maturity_data = d3.nest()
+                  .key(function(d) {
+                    return d["Maturity"]
+                  })
+                  .rollup(function(v) {
+                    return {startups: v.length}
+                  })
+                  .sortKeys(maturitySort)
+                  .entries(bar_data)
+                  
+
+                  var maxVal = d3.max(maturity_data, function(d) {
+                    return d.value.startups
+                })
+
+                var x = d3.scaleBand()
+                .domain(maturity_data.map(function(d) {
+                    return d.key
+                }))
+                .range([50, bar_width-50])
+                .paddingInner(0.25);
+
+                var colorScale = d3.scaleOrdinal().domain(x.domain())
+                .range(["#82ADBD"])
+
+                var y = d3.scaleLinear()
+                .range([bar_height-50, 50])
+                .domain([0, maxVal]);
+
+                var maxTicks = maxVal
+                if (maxVal > 30) {
+                  maxTicks = maxVal / 2
+                }
+
+                barSVG.append("g")
+                .attr("transform", "translate(50,0)")
+                .call(d3.axisLeft(y).ticks(maxTicks).tickSize(-bar_width+100));
+
+                var bars = barSVG.selectAll(".bar")
+                .data(maturity_data)
+                .enter().append("rect")
+                .attr("class", "bar")
+                .attr("fill", function(d) {
+                  return colorScale(d.key)
+                })
+                .attr("x", function(d) { return x(d.key); })
+                .attr("width", x.bandwidth())
+                .attr("y", bar_height - 50)
+                //.attr("height", function(d) { return bar_height -50 - y(+d.startups); });
+                .attr("height", 0)
+
+                bars.transition()
+                .duration(1500)
+                .attr("height", function(d) { return bar_height -50 - y(+d.value.startups); })
+                .attr("y", function(d) { return y(+d.value.startups); })
+
+                barSVG.append("g")
+                .attr("transform", "translate(0," + (bar_height-50) + ")")
+                .call(d3.axisBottom(x).ticks(maturity_data.length));
+
+                barSVG.append("text")             
+                .attr("transform",
+                  "translate(" + (bar_width/2) + " ," + 
+                     (bar_height-50 + 26) + ")")
+              .attr("class", "bar-axis-label")
+              .text("Maturity");
+
+              barSVG.append("text")
+              .attr("transform", "rotate(-90)")
+              .attr("y", 12)
+              .attr("x",0 - ((bar_height-10) / 2))
+              .attr("dy", "1em")
+              .attr("class", "bar-axis-label")
+              .text("Number of Startups");   
+
+                console.log(maturity_data)
+                }
+
+
+
 
 
 
