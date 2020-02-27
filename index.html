@@ -4259,6 +4259,12 @@
                 if (type === "Maturity") {
                   var maturityOrder = [
                   "Existing", "Emerging", "Distant"]
+
+                   bar_data = bar_data.filter(function(d) {
+                    return d.Maturity != ""
+                  }) 
+ 
+
                   function maturitySort(a, b) {
                     
                     for (i = 0; i < maturityOrder.length; i++) {
@@ -4280,7 +4286,9 @@
                     return {startups: v.length}
                   })
                   .sortKeys(maturitySort)
-                  .entries(bar_data)
+                  .entries(bar_data.filter(function(d) {
+                    return d.Maturity != ""
+                  }) )
                   
 
                   var maxVal = d3.max(maturity_data, function(d) {
