@@ -903,6 +903,7 @@
 
   .hero-startup-container {
     padding: 10px;
+    height: 150px;
   }
 
   .hero-startup-number {
@@ -933,7 +934,7 @@
 
   .hero-startup-logo {
       margin: auto;
-    width: 140px;
+    width: 100px;
 
   }
 
@@ -943,7 +944,7 @@
     font-family: "Graphik Regular";
     font-size: 12px;
     padding: 5px;
-    height: 140px;
+
   }
 
   .hero-startup-stats {
@@ -952,7 +953,7 @@
     font-family: "Graphik Regular";
     font-size: 12px;
     padding: 5px;
-    height: 140px;
+
     margin-bottom: 20px;
   }
 
@@ -1155,11 +1156,11 @@
               <div id="hs-0" class="hero-startup">
                 <div class="hero-startup-container">
                     <div class="fl">
-                  <div class="hero-startup-logo-container">
+                  <div id="hs-logo-container-0" class="hero-startup-logo-container">
                     <img id="hs-logo-0" class="hero-startup-logo" src="">
                   </div>
                 </div>
-                  <div class="hero-startup-desc">
+                  <div id="hs-desc-0" class="hero-startup-desc">
                     <div id="hs-ov-0" class="hero-startup-desc-overview"></div>
                     <div id="hs-prb-0" class="hero-startup-desc-problem"></div>
                     <div id="hs-sln-0" class="hero-startup-desc-solution"></div>
@@ -1176,11 +1177,11 @@
               <div id="hs-1" class="hero-startup">
                 <div class="hero-startup-container">
                     <div class="fl">
-                  <div class="hero-startup-logo-container">
+                  <div id="hs-logo-container-1" class="hero-startup-logo-container">
                     <img id="hs-logo-1" class="hero-startup-logo" src="">
                   </div>
                 </div>
-                  <div class="hero-startup-desc">
+                  <div id="hs-desc-1" class="hero-startup-desc">
                     <div id="hs-ov-1" class="hero-startup-desc-overview"></div>
                     <div id="hs-prb-1" class="hero-startup-desc-problem"></div>
                     <div id="hs-sln-1" class="hero-startup-desc-solution"></div>
@@ -1197,11 +1198,11 @@
               <div id="hs-2" class="hero-startup">
                 <div class="hero-startup-container">
                     <div class="fl">
-                  <div class="hero-startup-logo-container">
+                  <div id="hs-logo-container-2" class="hero-startup-logo-container">
                     <img id="hs-logo-2" class="hero-startup-logo" src="">
                   </div>
                 </div>
-                  <div class="hero-startup-desc">
+                  <div id="hs-desc-2" class="hero-startup-desc">
                     <div id="hs-ov-2" class="hero-startup-desc-overview"></div>
                     <div id="hs-prb-2" class="hero-startup-desc-problem"></div>
                     <div id="hs-sln-2" class="hero-startup-desc-solution"></div>
@@ -1957,6 +1958,8 @@
                       if (v.Name !== "COMPETITOR") {
                         d3.select("#hs-" + i).style("display", "")
 
+                        
+
                           if (v["Logo URL"] !== "") {
                               var logo_url = v["Logo URL"]
                           } else {
@@ -1989,6 +1992,10 @@
                         d3.select("#hs-ov-" + i).html(hs_ov)
                         d3.select("#hs-prb-" + i).html(hs_prb)
                         d3.select("#hs-sln-" + i).html(hs_sln)
+                        hs_c_height = d3.select("#hs-desc-" + i).node()
+                        .getBoundingClientRect().height
+
+                        d3.select("#hs-logo-container-" + i).style("height", hs_c_height + "px")
 
                         d3.select("#hs-website-" + i).html(hs_website)
                         d3.select("#hs-location-" + i).html(hs_location)
