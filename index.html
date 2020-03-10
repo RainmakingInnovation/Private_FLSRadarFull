@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <title>Dashboard</title>
     <script src="https://d3js.org/d3.v5.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.0.1/spin.min.js"></script>
     <script src="https://cdn.rawgit.com/eligrey/canvas-toBlob.js/f1a01896135ab378aa5c0118eadd81da55e698d8/canvas-toBlob.js"></script>
     <script src="https://cdn.rawgit.com/eligrey/FileSaver.js/e9d941381475b5df8b7d7691013401e171014e89/FileSaver.min.js"></script>
         <script
@@ -243,7 +244,7 @@
       .dropdown-industry {
         margin: auto;
         position: relative;
-        display: inline-block;
+        display: none;
         text-anchor: middle;
       }
 
@@ -315,6 +316,7 @@
       #map-button,
       #save-button {
         background-color: #787878;
+         display: none;
       }
 
       #map-button:hover,
@@ -453,6 +455,10 @@
         z-index: 1;
       }
 
+      #button-17,
+      #button-16 {
+        display: none;
+      }
       #button-16 .knobs:before {
         content: "Year";
         position: absolute;
@@ -616,7 +622,8 @@
         max-height: 300px;
         overflow: scroll;
         font-family: "Graphik Regular";
-        background-color: white;
+        background-color: black;
+        color: white;
         border: 1px solid #787878;
         padding: 10px;
       }
@@ -630,6 +637,9 @@
         min-width: 60px;
       }
 
+      .startup-table td > a {
+        color: white;
+      }
       .table-header {
         font-family: "Graphik Bold";  
       }
@@ -926,21 +936,22 @@
   .hero-startup-logo-container {
     display:table-cell;
     padding: 5px;
-    width:140px;
-    height:140px;
+        padding-top: 0px;
+        padding-bottom: 0px;
+        max-width: 140px;
     text-align: center; 
     vertical-align: middle;
   }
 
   .hero-startup-logo {
       margin: auto;
-    width: 100px;
+    width: 110px;
 
   }
 
   .hero-startup-desc {
-    float:  left;
-    width: 50%;
+        float: left;
+        width: 60%;
     font-family: "Graphik Regular";
     font-size: 12px;
     padding: 5px;
@@ -948,8 +959,8 @@
   }
 
   .hero-startup-stats {
-    float:  left;
-    width: 20%;
+        float: left;
+        width: 25%;
     font-family: "Graphik Regular";
     font-size: 12px;
     padding: 5px;
@@ -1153,69 +1164,89 @@
             </div>
             <div class="column right">
               <div class="right-title">Hero Startups</div>
-              <div id="hs-0" class="hero-startup">
-                <div class="hero-startup-container">
-                    <div class="fl">
-                  <div id="hs-logo-container-0" class="hero-startup-logo-container">
-                    <img id="hs-logo-0" class="hero-startup-logo" src="">
-                  </div>
-                </div>
-                  <div id="hs-desc-0" class="hero-startup-desc">
-                    <div id="hs-ov-0" class="hero-startup-desc-overview"></div>
-                    <div id="hs-prb-0" class="hero-startup-desc-problem"></div>
-                    <div id="hs-sln-0" class="hero-startup-desc-solution"></div>
-                  </div>
-                  <div class="hero-startup-stats">
-                    <div id="hs-website-0" class="hero-startup-stats-website"></div>
-                    <div id="hs-location-0" class="hero-startup-stats-location"></div>
-                    <div id="hs-round-0" class="hero-startup-stats-round"></div>
-                    <div id="hs-amount-0" class="hero-startup-stats-amount"></div>
-                    <div id="hs-year-0" class="hero-startup-stats-year"></div>
-                  </div>
-                </div>
-              </div>
-              <div id="hs-1" class="hero-startup">
-                <div class="hero-startup-container">
-                    <div class="fl">
-                  <div id="hs-logo-container-1" class="hero-startup-logo-container">
-                    <img id="hs-logo-1" class="hero-startup-logo" src="">
-                  </div>
-                </div>
-                  <div id="hs-desc-1" class="hero-startup-desc">
-                    <div id="hs-ov-1" class="hero-startup-desc-overview"></div>
-                    <div id="hs-prb-1" class="hero-startup-desc-problem"></div>
-                    <div id="hs-sln-1" class="hero-startup-desc-solution"></div>
-                  </div>
-                  <div class="hero-startup-stats">
-                    <div id="hs-website-1" class="hero-startup-stats-website"></div>
-                    <div id="hs-location-1" class="hero-startup-stats-location"></div>
-                    <div id="hs-round-1" class="hero-startup-stats-round"></div>
-                    <div id="hs-amount-1" class="hero-startup-stats-amount"></div>
-                    <div id="hs-year-1" class="hero-startup-stats-year"></div>
-                  </div>
-                </div>
-              </div>
-              <div id="hs-2" class="hero-startup">
-                <div class="hero-startup-container">
-                    <div class="fl">
-                  <div id="hs-logo-container-2" class="hero-startup-logo-container">
-                    <img id="hs-logo-2" class="hero-startup-logo" src="">
-                  </div>
-                </div>
-                  <div id="hs-desc-2" class="hero-startup-desc">
-                    <div id="hs-ov-2" class="hero-startup-desc-overview"></div>
-                    <div id="hs-prb-2" class="hero-startup-desc-problem"></div>
-                    <div id="hs-sln-2" class="hero-startup-desc-solution"></div>
-                  </div>
-                  <div class="hero-startup-stats">
-                    <div id="hs-website-2" class="hero-startup-stats-website"></div>
-                    <div id="hs-location-2" class="hero-startup-stats-location"></div>
-                    <div id="hs-round-2" class="hero-startup-stats-round"></div>
-                    <div id="hs-amount-2" class="hero-startup-stats-amount"></div>
-                    <div id="hs-year-2" class="hero-startup-stats-year"></div>
-                  </div>
-                </div>
-              </div>
+           <table>
+              <tr id="hs-0" class="hero-startup-container">
+                <td
+                  id="hs-logo-container-0"
+                  class="hero-startup-logo-container"
+                >
+                  <img id="hs-logo-0" class="hero-startup-logo" src="" />
+                </td>
+                <td id="hs-desc-0" class="hero-startup-desc">
+                  <div id="hs-ov-0" class="hero-startup-desc-overview"></div>
+                  <div id="hs-prb-0" class="hero-startup-desc-problem"></div>
+                  <div id="hs-sln-0" class="hero-startup-desc-solution"></div>
+                </td>
+                <td class="hero-startup-stats">
+                  <div
+                    id="hs-website-0"
+                    class="hero-startup-stats-website"
+                  ></div>
+                  <div
+                    id="hs-location-0"
+                    class="hero-startup-stats-location"
+                  ></div>
+                  <div id="hs-round-0" class="hero-startup-stats-round"></div>
+                  <div id="hs-amount-0" class="hero-startup-stats-amount"></div>
+                  <div id="hs-year-0" class="hero-startup-stats-year"></div>
+                </td>
+              </tr>
+
+              <tr id="hs-1" class="hero-startup-container">
+                <td
+                  id="hs-logo-container-1"
+                  class="hero-startup-logo-container"
+                >
+                  <img id="hs-logo-1" class="hero-startup-logo" src="" />
+                </td>
+                <td id="hs-desc-1" class="hero-startup-desc">
+                  <div id="hs-ov-1" class="hero-startup-desc-overview"></div>
+                  <div id="hs-prb-1" class="hero-startup-desc-problem"></div>
+                  <div id="hs-sln-1" class="hero-startup-desc-solution"></div>
+                </td>
+                <td class="hero-startup-stats">
+                  <div
+                    id="hs-website-1"
+                    class="hero-startup-stats-website"
+                  ></div>
+                  <div
+                    id="hs-location-1"
+                    class="hero-startup-stats-location"
+                  ></div>
+                  <div id="hs-round-1" class="hero-startup-stats-round"></div>
+                  <div id="hs-amount-1" class="hero-startup-stats-amount"></div>
+                  <div id="hs-year-1" class="hero-startup-stats-year"></div>
+                </td>
+              </tr>
+
+              <tr id="hs-2" class="hero-startup-container">
+                <td
+                  id="hs-logo-container-2"
+                  class="hero-startup-logo-container"
+                >
+                  <img id="hs-logo-2" class="hero-startup-logo" src="" />
+                </td>
+                <td id="hs-desc-2" class="hero-startup-desc">
+                  <div id="hs-ov-2" class="hero-startup-desc-overview"></div>
+                  <div id="hs-prb-2" class="hero-startup-desc-problem"></div>
+                  <div id="hs-sln-2" class="hero-startup-desc-solution"></div>
+                </td>
+                <td class="hero-startup-stats">
+                  <div
+                    id="hs-website-2"
+                    class="hero-startup-stats-website"
+                  ></div>
+                  <div
+                    id="hs-location-2"
+                    class="hero-startup-stats-location"
+                  ></div>
+                  <div id="hs-round-2" class="hero-startup-stats-round"></div>
+                  <div id="hs-amount-2" class="hero-startup-stats-amount"></div>
+                  <div id="hs-year-2" class="hero-startup-stats-year"></div>
+                </td>
+              </tr>
+            </table>
+
             </div>
             
           </div>
@@ -1325,6 +1356,23 @@
           bar_height = 460,
           popupMode = {"page": "none", "type": "none"};
 
+            // loader settings
+          var opts = {
+            lines: 9, // The number of lines to draw
+            length: 7, // The length of each line
+            width: 8, // The line thickness
+            radius: 24, // The radius of the inner circle
+            top: "57%",
+            left: "38.5%",
+            color: "#132A54", // #rgb or #rrggbb or array of colors
+            speed: 1.9, // Rounds per second
+            trail: 40, // Afterglow percentage
+            className: "spinner" // The CSS class to assign to the spinner
+          };
+
+          var target = document.getElementById("chart-container");
+
+          var spinner = new Spinner(opts).spin(target);
           d3.select("#radar-toggle-btn").attr("class", "left-sidebar-btn active")
           d3.select(".popup-bg").style("display", "none")
 
@@ -1389,7 +1437,8 @@
           .append("text")
           .attr("class", "chart-title")
           .text("FLSmidth Technology Radar")
-          .attr("y", (-height * 4.55) / 10);
+          .attr("y", (-height * 4.55) / 10)
+          .style("display", "none")
   
         var leftProjection = d3
           .geoMercator()
@@ -1422,7 +1471,8 @@
           .attr("width", titleLogoWidth)
           .attr("height", titleLogoHeight)
           .attr("y", -titleLogoHeight / 2)
-          .attr("x", -titleLogoWidth / 2); 
+          .attr("x", -titleLogoWidth / 2)
+          .style("display", "none")
   
         //CHANGE HERE:
         var focusAreaOrder = [
@@ -1454,7 +1504,13 @@
             d3.csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vSafGm_gSEK_M6dTEcS3sd2N7CcehHPfg561BJtgzrHClIt5DH79yqHI1LpeOLbbwGob_Xi0kVUdxMB/pub?gid=1261734015&single=true&output=csv"
             ).then(function(hero_data) { 
 
-              
+              spinner.stop();
+
+              d3.select("#button-16").style("display", "block")
+              d3.select(".dropdown-industry").style("display", "inline-block")
+              d3.select("#save-button").style("display", "block")
+              d3.select(".chart-title").style("display", "")
+              chartLogo.style("display", "")
   
               d3.json("assets/world_countries.json").then(function(json) {
 
